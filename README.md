@@ -63,24 +63,36 @@ def load_data():
     return X_train, X_test, y_train, y_test
 
 X_train, X_test, Y_train, Y_test = load_data()
+
 y_test=Y_test.argmax(1)
 
 # CNN+LSTM Model  -- Accuracy of model= 95.68%
 # CNN
 model = Sequential()
+
 model.add(Conv1D(64,2,input_shape=(128, 9),activation='relu'))
+
 model.add(MaxPooling1D(pool_size=2,padding='valid'))
+
 model.add(Conv1D(128,2,activation='relu'))
+
 model.add(MaxPooling1D(pool_size=2))
+
 model.add(Dropout(0.2))
+
 #model.add(Flatten())
+
 #model.add(Dense(n_classes, activation='sigmoid')) #n_classes
+
 #model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
 
 # LSTM
 model.add(LSTM(n_hidden,input_shape=(timesteps, input_dim)))
+
 model.add(Dropout(0.2))
+
 model.add(Dense(n_classes, activation='sigmoid'))
+
 model.compile(loss='categorical_crossentropy',
               optimizer='adam',
               metrics=['accuracy'])
@@ -98,7 +110,9 @@ model.load_weights('cnn_lstm.h5')
 
 # Evaluate
 predict=model.predict(X_test)
+
 pred_index_total=[]
+
 for pred in predict:
 
     pred_index = []
@@ -120,6 +134,7 @@ print("%%%%%%%%%%%%%%%",confusion_matrix)
 # Plot Results:
 width = 12
 height = 12
+
 normalised_confusion_matrix = np.array(confusion_matrix, dtype=float32)/np.sum(confusion_matrix)*100
 
 print(normalised_confusion_matrix)
