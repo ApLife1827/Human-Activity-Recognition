@@ -34,9 +34,11 @@ SIGNALS = [
     "total_acc_z"
 ]
 def _read_csv(filename):
+
     return pd.read_csv(filename, delim_whitespace=True, header=None)
 
 def load_signals(subset):
+
     signals_data = []
     for signal in SIGNALS:
         filename = '{0}/{1}/Inertial Signals/{2}_{3}.txt'.format(DATADIR,subset,signal,subset)
@@ -90,6 +92,7 @@ model.fit(X_train,
           
 # Save and Load model
 model.save_weights('cnn_lstm.h5')
+
 model.load_weights('cnn_lstm.h5')
 
 # Evaluate
