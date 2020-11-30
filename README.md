@@ -22,6 +22,7 @@ import pandas as pd
 import numpy as np
 
 DATADIR = 'HARDataset'
+
 SIGNALS = [
     "body_acc_x",
     "body_acc_y",
