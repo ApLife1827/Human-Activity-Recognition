@@ -33,6 +33,7 @@ SIGNALS = [
     "total_acc_y",
     "total_acc_z"
 ]
+
 def _read_csv(filename):
 
     return pd.read_csv(filename, delim_whitespace=True, header=None)
@@ -99,36 +100,54 @@ model.load_weights('cnn_lstm.h5')
 predict=model.predict(X_test)
 pred_index_total=[]
 for pred in predict:
+
     pred_index = []
     pred_list=pred.tolist()
     index_max=pred_list.index(max(pred_list))
     pred_index.append(index_max)
     pred_index_total.append(np.array(pred_index))
+    
 print(pred_index_total)
+
 one_hot_predictions=one_hot(np.array(pred_index_total))
+
 prediction=one_hot_predictions.argmax(1)
+
 confusion_matrix = metrics.confusion_matrix(y_test, prediction)
+
 print("%%%%%%%%%%%%%%%",confusion_matrix)
 
 # Plot Results:
 width = 12
 height = 12
 normalised_confusion_matrix = np.array(confusion_matrix, dtype=float32)/np.sum(confusion_matrix)*100
+
 print(normalised_confusion_matrix)
+
 plt.figure(figsize=(width, height))
+
 plt.imshow(
     normalised_confusion_matrix,
     interpolation='nearest',
     cmap=plt.cm.rainbow
 )
+
 plt.title("Confusion matrix \n(normalised to % of total test data)")
+
 plt.colorbar()
+
 tick_marks = np.arange(n_classes)
+
 plt.xticks(tick_marks,lables,rotation=90)
+
 plt.yticks(tick_marks,lables)
+
 plt.tight_layout()
+
 plt.ylabel('True label')
+
 plt.xlabel('Predicted label')
+
 plt.show()
 
 
